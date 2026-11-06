@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a1118" />
+    <title>Resort administration | Devantara</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./admin.css" />
+    <script src="./admin.js" defer></script>
+  </head>
+  <body class="admin-page">
+    <header class="admin-header">
+      <a class="brand" href="/" aria-label="Devantara Resort home">
+        <img src="./file_00000000efec820b99f93b6e6968371f.png" alt="Devantara Resort" />
+      </a>
+      <div>
+        <p class="eyebrow">Devantara Resort</p>
+        <h1>Administration</h1>
+      </div>
+      <button class="button button-outline" id="logout" type="button" hidden>Sign out</button>
+    </header>
+
+    <main class="admin-main">
+      <section class="admin-login admin-panel" id="login-panel">
+        <p class="eyebrow">Secure access</p>
+        <h2>Admin <em>sign in</em></h2>
+        <form id="login-form">
+          <label>Email address<input name="email" type="email" autocomplete="username" required /></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+          <button class="button" type="submit">Sign in</button>
+          <p class="admin-feedback" id="login-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section id="dashboard" hidden>
+        <nav class="admin-tabs" aria-label="Admin sections">
+          <button class="active" type="button" data-panel="overview">Overview</button>
+          <button type="button" data-panel="bookings">Bookings</button>
+          <button type="button" data-panel="rooms">Rooms &amp; availability</button>
+          <button type="button" data-panel="enquiries">Enquiries</button>
+          <button type="button" data-panel="payments">Payments</button>
+          <button type="button" data-panel="content">Site content</button>
+          <button type="button" data-panel="activity">Activity log</button>
+        </nav>
+        <p class="admin-feedback" id="dashboard-feedback" role="status" aria-live="polite"></p>
+
+        <section class="admin-panel admin-content-panel" data-content="overview">
+          <div class="admin-panel-heading"><div><p class="eyebrow">At a glance</p><h2>Resort <em>overview</em></h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="metric-grid" id="metrics"></div>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="bookings" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Guest stays</p><h2>Bookings</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Reference</th><th>Guest</th><th>Stay</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody id="bookings-table"></tbody></table></div>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="rooms" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Stay inventory</p><h2>Rooms &amp; availability</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="admin-two-column">
+            <form class="admin-form" id="category-form">
+              <h3>Create room category</h3>
+              <label>Category name<input name="name" required maxlength="120" /></label>
+              <label>Description<textarea name="description" rows="2" maxlength="1000"></textarea></label>
+              <button class="button" type="submit">Add category</button>
+              <p class="admin-feedback" data-feedback></p>
+            </form>
+            <form class="admin-form" id="room-form">
+              <h3 id="room-form-title">Add a room</h3>
+              <input name="room_id" type="hidden" />
+              <label>Room name<input name="name" required minlength="2" maxlength="120" /></label>
+              <label>Category<select name="category_id" required></select></label>
+              <label>Base nightly rate (INR)<input name="base_rate" type="number" min="0.01" step="0.01" required /></label>
+              <div class="admin-form-row">
+                <label>Adult capacity<input name="capacity_adults" type="number" min="1" value="2" required /></label>
+                <label>Child capacity<input name="capacity_children" type="number" min="0" value="0" required /></label>
+                <label>Room inventory<input name="inventory" type="number" min="1" value="1" required /></label>
+              </div>
+              <label>Description<textarea name="description" rows="3" maxlength="4000"></textarea></label>
+              <label>Amenities (comma-separated)<input name="amenities" maxlength="2000" /></label>
+              <label>Image URL<input name="image_url" type="url" maxlength="500" /></label>
+              <div class="admin-form-actions"><button class="button" type="submit" id="room-submit">Create room</button><button class="button button-outline" type="button" id="room-edit-cancel" hidden>Cancel edit</button></div>
+              <p class="admin-feedback" data-feedback></p>
+            </form>
+          </div>
+          <div class="table-wrap"><table><thead><tr><th>Room</th><th>Category</th><th>Rate / night</th><th>Capacity</th><th>Status</th><th></th></tr></thead><tbody id="rooms-table"></tbody></table></div>
+          <form class="admin-form availability-form" id="availability-form">
+            <h3>Set availability or a nightly price</h3>
+            <label>Room<select name="room_id" required></select></label>
+            <div class="admin-form-row">
+              <label>From<input name="start_date" type="date" required /></label>
+              <label>Through (inclusive)<input name="end_date" type="date" required /></label>
+              <label>Price override (INR, optional)<input name="price_override" type="number" min="0" step="0.01" /></label>
+            </div>
+            <label class="checkbox-label"><input name="is_closed" type="checkbox" /> Close room for these dates</label>
+            <button class="button" type="submit">Save date settings</button>
+            <p class="admin-feedback" data-feedback></p>
+          </form>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="enquiries" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Guest messages</p><h2>Enquiries</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="table-wrap"><table><thead><tr><th>Received</th><th>Guest</th><th>Contact</th><th>Message</th><th>Status</th></tr></thead><tbody id="enquiries-table"></tbody></table></div>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="payments" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Gateway transactions</p><h2>Payments &amp; refunds</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <p class="admin-note">Refunds are sent to Razorpay and remain pending until the gateway confirms processing. Payment records are read-only here.</p>
+          <div class="table-wrap"><table><thead><tr><th>Payment</th><th>Booking</th><th>Guest</th><th>Amount</th><th>Status</th><th></th></tr></thead><tbody id="payments-table"></tbody></table></div>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="content" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Published information</p><h2>Site content</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="admin-two-column">
+            <form class="admin-form" id="amenity-form">
+              <h3>Add amenity</h3><label>Name<input name="name" required maxlength="120" /></label>
+              <label>Description<textarea name="description" rows="2" maxlength="2000"></textarea></label>
+              <label>Icon (optional)<input name="icon" maxlength="80" /></label>
+              <button class="button" type="submit">Add amenity</button><p class="admin-feedback" data-feedback></p>
+            </form>
+            <form class="admin-form" id="package-form">
+              <h3>Add a package</h3><label>Name<input name="name" required maxlength="120" /></label>
+              <label>Description<textarea name="description" rows="2" maxlength="2000"></textarea></label>
+              <label>Price (optional, INR)<input name="price" type="number" min="0" step="0.01" /></label>
+              <div class="admin-form-row"><label>Starts on<input name="starts_on" type="date" /></label><label>Ends on<input name="ends_on" type="date" /></label></div>
+              <button class="button" type="submit">Add package</button><p class="admin-feedback" data-feedback></p>
+            </form>
+            <form class="admin-form" id="gallery-form">
+              <h3>Add a gallery image</h3><label>Title<input name="title" required maxlength="120" /></label>
+              <label>Image URL<input name="image_url" type="url" required maxlength="500" /></label>
+              <label>Category<input name="category" value="stay" maxlength="64" /></label>
+              <label>Alt text<input name="alt_text" maxlength="250" /></label>
+              <label class="checkbox-label"><input name="is_published" type="checkbox" /> Publish on website</label>
+              <button class="button" type="submit">Add gallery image</button><p class="admin-feedback" data-feedback></p>
+            </form>
+            <div class="content-info">
+              <h3>Public contact information</h3>
+              <p>Business contact details are supplied through the server environment and are read-only here. Update <code>.env</code>, then restart the API.</p>
+              <p id="admin-site-info">Loading public contact details…</p>
+            </div>
+          </div>
+          <div class="admin-two-column">
+            <div><h3>Amenities</h3><div id="amenities-list"></div></div>
+            <div><h3>Packages</h3><div id="packages-list"></div></div>
+            <div><h3>Gallery</h3><div id="gallery-list"></div></div>
+          </div>
+        </section>
+
+        <section class="admin-panel admin-content-panel" data-content="activity" hidden>
+          <div class="admin-panel-heading"><div><p class="eyebrow">Audit trail</p><h2>Admin activity</h2></div><button class="button button-outline" type="button" data-refresh>Refresh</button></div>
+          <div class="table-wrap"><table><thead><tr><th>When</th><th>Action</th><th>Record</th><th>Details</th></tr></thead><tbody id="activity-table"></tbody></table></div>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Discover Devantara Resort, explore the property, and enquire about a stay."
+    />
+    <meta name="theme-color" content="#0a1118" />
+    <title>Devantara Resort | A stay beyond the ordinary</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Devantara Resort home">
+        <img src="./file_00000000efec820b99f93b6e6968371f.png" alt="Devantara Resort" />
+      </a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="navigation" id="primary-navigation" aria-label="Main navigation">
+        <a href="#top">Home</a>
+        <a href="#rooms">Rooms &amp; Villas</a>
+        <a href="#amenities">Amenities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#visit">Visit</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a class="button button-small nav-book" href="#booking">Book now</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-backdrop"></div>
+        <div class="hero-content page-width">
+          <p class="eyebrow">A private escape</p>
+          <h1 id="hero-title">A stay beyond<br /><em>the ordinary.</em></h1>
+          <p class="hero-copy">Slow down, settle in, and discover a more considered kind of luxury at Devantara Resort.</p>
+          <div class="hero-actions">
+            <a class="button" href="#booking">Book your stay <span aria-hidden="true">→</span></a>
+            <a class="text-link" href="#about"><span class="play-icon" aria-hidden="true">▶</span> Discover Devantara</a>
+          </div>
+        </div>
+        <form class="booking-bar page-width" id="booking" aria-label="Check room availability">
+          <label class="booking-field">
+            <span>Check in</span>
+            <input id="check-in" name="checkin" type="date" required aria-label="Check-in date" />
+          </label>
+          <label class="booking-field">
+            <span>Check out</span>
+            <input id="check-out" name="checkout" type="date" required aria-label="Check-out date" />
+          </label>
+          <label class="booking-field guest-field">
+            <span>Adults</span>
+            <select name="adults" aria-label="Number of adults">
+              <option value="2">2 Adults</option>
+              <option value="1">1 Adult</option>
+              <option value="3">3 Adults</option>
+              <option value="4">4 Adults</option>
+            </select>
+          </label>
+          <label class="booking-field guest-field">
+            <span>Children</span>
+            <select name="children" aria-label="Number of children">
+              <option value="0">No children</option>
+              <option value="1">1 Child</option>
+              <option value="2">2 Children</option>
+              <option value="3">3 Children</option>
+            </select>
+          </label>
+          <button class="button booking-submit" type="submit">Check availability <span aria-hidden="true">→</span></button>
+          <p class="booking-feedback" id="booking-feedback" role="status" aria-live="polite"></p>
+        </form>
+        <a class="scroll-cue" href="#about" aria-label="Scroll to discover"><span></span></a>
+      </section>
+      <section class="booking-results page-width" id="booking-results" aria-live="polite" aria-label="Available rooms"></section>
+
+      <section class="intro section page-width" id="about">
+        <div class="intro-image image-frame">
+          <img
+            src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=85"
+            alt="A tranquil resort pool surrounded by lush greenery"
+            loading="lazy"
+          />
+          <span class="image-caption">A little further from the everyday</span>
+        </div>
+        <div class="intro-copy">
+          <p class="eyebrow">Welcome to Devantara</p>
+          <h2>Rooted in place.<br /><em>Made for you.</em></h2>
+          <p class="body-copy">Find your own rhythm in a quiet corner of Rajasthan. Thoughtful spaces, warm hospitality, and the simple pleasure of having nowhere else to be.</p>
+          <a class="underlined-link" href="#visit">The Devantara experience <span aria-hidden="true">↗</span></a>
+          <div class="intro-note" id="location-note" hidden><span class="note-mark">D</span><span id="location-note-value"></span></div>
+        </div>
+      </section>
+
+      <section class="section rooms-section" id="rooms">
+        <div class="page-width">
+          <div class="section-heading">
+            <p class="eyebrow">Your own kind of escape</p>
+            <h2>Rooms &amp; <em>villas</em></h2>
+            <p>Unwind in spaces designed for comfort, privacy and the art of doing less.</p>
+          </div>
+          <div class="room-grid" id="rooms-grid" hidden></div>
+          <p class="empty-state" id="rooms-empty" hidden>Room details and current rates are being updated. Please contact our team for assistance.</p>
+          <div class="center-action"><a class="underlined-link" href="#booking">Explore all stays <span aria-hidden="true">→</span></a></div>
+        </div>
+      </section>
+
+      <section class="section villa-detail page-width" id="villa-detail" hidden>
+        <div class="villa-detail-image image-frame">
+          <img src="./devantara-resort.jpg" alt="Devantara Resort property" loading="lazy" />
+          <span class="image-caption" id="room-feature-caption"></span>
+        </div>
+        <div class="villa-detail-copy">
+          <a class="back-link" href="#rooms"><span aria-hidden="true">←</span> Back to rooms</a>
+          <p class="eyebrow">A closer look</p>
+          <h2 id="room-feature-name"></h2>
+          <p class="villa-detail-price" id="room-feature-price"></p>
+          <p class="body-copy" id="room-feature-description"></p>
+          <div class="villa-perks" id="room-feature-details"></div>
+          <a class="button" href="#booking">Check availability <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
+
+      <section class="section pricing-section" id="pricing">
+        <div class="page-width">
+          <div class="section-heading">
+            <p class="eyebrow">Straightforward, thoughtful stays</p>
+            <h2>Room for <em>every plan.</em></h2>
+            <p>Find your fit. Our team can help with availability and the details.</p>
+          </div>
+          <div class="pricing-grid" id="pricing-grid" hidden></div>
+          <p class="empty-state" id="pricing-empty" hidden>Current room rates are being updated. Please contact our team for a quote.</p>
+          <p class="pricing-note">Displayed prices use the configured nightly rates. Contact the resort to confirm applicable taxes and inclusions.</p>
+        </div>
+      </section>
+
+      <section class="section offers-section page-width" aria-labelledby="offers-title">
+        <div class="offers-copy">
+          <p class="eyebrow">Stay a little longer</p>
+          <h2 id="offers-title">Time well <em>spent.</em></h2>
+          <p class="body-copy">A change of scene deserves a little something extra. Find a stay that feels just right.</p>
+          <a class="button button-outline" href="#booking">Find your stay <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="offer-cards" id="packages-grid" hidden></div>
+        <p class="empty-state" id="packages-empty" hidden>Seasonal packages are being updated. Please contact our team for current offers.</p>
+      </section>
+
+      <section class="section amenities-section" id="amenities">
+        <div class="page-width">
+          <div class="section-heading">
+            <p class="eyebrow">The little things, taken care of</p>
+            <h2>Room to <em>reconnect.</em></h2>
+            <p>Everything you need for a stay that feels effortless.</p>
+          </div>
+          <div class="amenity-grid" id="amenities-grid" hidden></div>
+          <p class="empty-state" id="amenities-empty" hidden>Experience details are being updated. Please contact our team for current information.</p>
+        </div>
+      </section>
+
+      <section class="section gallery-section page-width" id="gallery">
+        <div class="section-heading">
+          <p class="eyebrow">A glimpse of the good life</p>
+          <h2>Moments at <em>Devantara.</em></h2>
+          <p>Take a look around. There’s a place for every kind of pause.</p>
+        </div>
+        <div class="gallery-filters" role="group" aria-label="Filter gallery images">
+          <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">All moments</button>
+          <button class="filter-button" type="button" data-filter="stay" aria-pressed="false">The stay</button>
+          <button class="filter-button" type="button" data-filter="dining" aria-pressed="false">Dining</button>
+          <button class="filter-button" type="button" data-filter="outside" aria-pressed="false">Outdoors</button>
+        </div>
+        <div class="gallery-grid" hidden></div>
+        <p class="empty-state" id="gallery-empty" hidden>Gallery images are being updated.</p>
+      </section>
+
+      <section class="visit-section section" id="visit">
+        <div class="visit-inner page-width">
+          <div class="visit-copy">
+            <p class="eyebrow">A world away, within reach</p>
+            <h2>Make your way<br />to <em>Devantara.</em></h2>
+            <p class="body-copy">Contact our team for current travel guidance and directions.</p>
+            <div class="travel-list">
+              <div><span aria-hidden="true">✈</span><p><strong>Arriving by air</strong><small>Contact our team for current travel guidance.</small></p></div>
+              <div><span aria-hidden="true">▤</span><p><strong>Arriving by rail</strong><small>Contact our team for current travel guidance.</small></p></div>
+              <div><span aria-hidden="true">⌖</span><p><strong>Arriving by road</strong><small>Contact our team for current travel guidance.</small></p></div>
+            </div>
+            <a class="underlined-link" href="#contact">Ask us about getting here <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="visit-image image-frame">
+            <img src="./devantara-resort.jpg" alt="The Devantara Resort property" loading="lazy" />
+            <span class="visit-stamp">Devantara<br /><small>Resort</small></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact-section section page-width" id="contact">
+        <div class="contact-intro">
+          <p class="eyebrow">We’re here to help</p>
+          <h2>Let’s make it<br /><em>happen.</em></h2>
+          <p class="body-copy">Have a question, a special request, or just want to say hello? We’d love to hear from you.</p>
+          <a class="contact-detail" id="contact-phone" hidden><span aria-hidden="true">☎</span><span class="contact-value"></span></a>
+          <a class="contact-detail" id="contact-email" hidden><span aria-hidden="true">✉</span><span class="contact-value"></span></a>
+          <p class="contact-detail" id="contact-address" hidden><span aria-hidden="true">⌖</span><span class="contact-value"></span></p>
+          <p class="contact-detail contact-not-configured" id="contact-not-configured">Please send us a message using the enquiry form.</p>
+        </div>
+        <div class="contact-form-wrap">
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <label>Your name<input name="name" type="text" autocomplete="name" placeholder="How should we address you?" required /></label>
+              <label>Email address<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></label>
+            </div>
+            <div class="form-row">
+              <label>Phone (optional)<input name="phone" type="tel" autocomplete="tel" maxlength="32" placeholder="Your phone number" /></label>
+              <label>Subject<input name="subject" type="text" maxlength="160" placeholder="How can we help?" /></label>
+            </div>
+            <label>What’s on your mind?<textarea name="message" rows="4" placeholder="Tell us a little about how we can help..." required></textarea></label>
+            <label class="honeypot" aria-hidden="true">Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+            <button class="button" type="submit">Send an enquiry <span aria-hidden="true">→</span></button>
+            <p class="form-feedback" id="contact-feedback" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-main page-width">
+        <a class="footer-brand" href="#top">
+          <img src="./file_00000000efec820b99f93b6e6968371f.png" alt="" />
+          <span>DEVANTARA<br /><small>R E S O R T</small></span>
+        </a>
+        <p>A little further from the everyday.<br /><span id="footer-address">Devantara Resort</span></p>
+        <div class="footer-links"><a href="#rooms">Rooms</a><a href="#amenities">Experiences</a><a href="#contact">Contact</a><a href="#booking">Book a stay</a></div>
+      </div>
+      <div class="footer-bottom page-width"><span>© <span id="current-year"></span> Devantara Resort</span><span>Made for meaningful getaways.</span></div>
+    </footer>
+  </body>
+</html>
